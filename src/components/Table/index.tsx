@@ -1,34 +1,29 @@
-const Table = () => {
+import './styles.scss'
+
+const Table = ({ data }) => {
+  let headers = data.length ? Object.keys(data[0]) : [];
+
   return (
     <div>
-      <table>
-        <thead>
-          <tr>
-            {/* {headers.map(h => (
-              <th key={h} className="border p-2 text-left bg-gray-100">{h}</th>
-            ))} */}
-            <th>Head 1</th>
-            <th>Head 1</th>
-            <th>Head 1</th>
-            <th>Head 1</th>
-            <th>Head 1</th>
+      <table className="table">
+        <thead className="table__head">
+          <tr className="table__row">
+            {headers.map((header, ind) => (
+              <th key={ind}>{header}</th>
+            ))}
           </tr>
         </thead>
-        <tbody>
-          {/* {allRows.map((rec, i) => (
-            <tr key={i}>
-              {headers.map(h => (
-                <td key={h} className="border p-2">{rec[h]}</td>
-              ))}
-            </tr>
-          ))} */}
-           <tr>
-            <th>body 1</th>
-            <th>body 1</th>
-            <th>body 1</th>
-            <th>body 1</th>
-            <th>body 1</th>
-          </tr>
+        <tbody className='table__body'>
+          {data.map((row) => {
+            let rowId = row.id;
+            return (
+              <tr key={rowId} className="table__row">
+                {headers.map((h) => (
+                  <td key={h}>{row[h]}</td>
+                ))}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

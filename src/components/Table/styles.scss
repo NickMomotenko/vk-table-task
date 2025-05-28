@@ -1,0 +1,27 @@
+.table {
+  width: 100%;
+
+  td {
+    padding: 10px 0;
+
+    &:last-child {
+      border: none;
+    }
+  }
+
+  th{
+    padding: 10px 0;
+  }
+
+  &__head {
+    background: #dddddd8f;
+  }
+
+  &__row {
+    background: #dddddd29;
+  }
+
+  &__body {
+    text-align: center;
+  }
+}

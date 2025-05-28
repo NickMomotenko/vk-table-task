@@ -1,10 +1,12 @@
 import "./App.css";
-import Table from "./components/Table";
+import ModalContainer from "./containers/ModalContainer";
+import { TableContainer } from "./containers/TableContainer";
 
 function App() {
   return (
     <>
-      <Table />
+      <TableContainer />
+      <ModalContainer />
     </>
   );
 }
