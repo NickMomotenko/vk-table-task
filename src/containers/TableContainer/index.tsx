@@ -11,7 +11,7 @@ export const TableContainer = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const loaderRef = useRef<HTMLDivElement | null>(null);
-  const isFetchingRef = useRef(false); // 👈 флаг блокировки
+  const isFetchingRef = useRef(false);
 
   const fetchPosts = useCallback(async (pageNumber: number) => {
     if (isFetchingRef.current) return;

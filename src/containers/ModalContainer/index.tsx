@@ -1,38 +1,43 @@
-import { useState } from "react";
-import "./styles.scss";
 import { Button, Input } from "@vkontakte/vkui";
 import { useForm } from "react-hook-form";
 
-const ModalContainer = () => {
+import "./styles.scss";
+import { useEffect } from "react";
+
+export const ModalContainer = ({ active }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [active, setActive] = useState(false);
 
   const keys = ["name", "age", "city", "position", "salary"];
 
-  const submit = (data) => {
-    console.log(data);
+  useEffect(() => {
+    if (active) {
+      document.body.style.overflow = `hidden`;
+    } else document.body.style.overflowY = `auto`;
+  }, [active]);
 
-    // const response = await fetch("http://localhost:3000/posts", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     id: 4,
-    //     title: "a title 4",
-    //     views: 50,
-    //     likes: 100,
-    //     dislikes: 4,
-    //     description: "text",
-    //   }),
-    // });
+  const submit = async (data: any) => {
 
-    // setActive(false);
-    // const data = await response.json();
+    const response = await fetch("http://localhost:3000/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: 10,
+        idNum: 5,
+        name: "Имя 5",
+        age: 24,
+        city: "Город 4",
+        position: "Профессия 4",
+        оклад: 24000,
+      }),
+    });
+
+    const newItem = await response.json();
     // console.log("Пост добавлен:", data);
   };
 
@@ -65,5 +70,3 @@ const ModalContainer = () => {
     </div>
   );
 };
-
-export default ModalContainer;
