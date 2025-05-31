@@ -9,11 +9,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  visibility: hidden;
-
-  &--active {
-    visibility: visible;
-  }
 
   &__row {
     margin-bottom: 15px;

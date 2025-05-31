@@ -1,68 +1,61 @@
-import { useEffect, useState, useRef, useCallback } from "react";
-import Table from "../../components/Table";
+import { useEffect, useRef, useState } from "react";
+import { useUsers } from "../../context/UserContext";
 import { Container } from "../../components/Container";
+import Table from "../../components/Table";
 
 const LIMIT = 20;
 
 export const TableContainer = () => {
-  const [data, setData] = useState<any[]>([]);
+  const { users, setUsers } = useUsers();
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-
   const loaderRef = useRef<HTMLDivElement | null>(null);
   const isFetchingRef = useRef(false);
 
-  const fetchPosts = useCallback(async (pageNumber: number) => {
+  const fetchPosts = async (pageNumber: number) => {
     if (isFetchingRef.current) return;
 
     isFetchingRef.current = true;
     setIsLoading(true);
 
     try {
-      const response = await fetch(
-        `http://localhost:3000/users?_page=${pageNumber}&_limit=${LIMIT}&_sort=idNum&_order=asc`
+      const res = await fetch(
+        `http://localhost:3000/users?_page=${pageNumber}&_limit=${LIMIT}&_sort=id&_order=asc`
       );
-      if (!response.ok) throw new Error("Ошибка сети: " + response.status);
-
-      const fetchedData = await response.json();
-      setData((prev) => [...prev, ...fetchedData]);
-      setHasMore(fetchedData.length === LIMIT);
-    } catch (error) {
-      console.error("Ошибка при загрузке данных:", error);
+      const data = await res.json();
+      setUsers((prev) => [...prev, ...data]);
+      setHasMore(data.length === LIMIT);
+    } catch (err) {
+      console.error("Ошибка:", err);
     } finally {
-      setIsLoading(false);
       isFetchingRef.current = false;
+      setIsLoading(false);
     }
-  }, []);
+  };
 
   useEffect(() => {
     fetchPosts(page);
-  }, [page, fetchPosts]);
+  }, [page]);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
-      if (
-        entries[0].isIntersecting &&
-        hasMore &&
-        !isLoading &&
-        !isFetchingRef.current 
-      ) {
+      if (entries[0].isIntersecting && hasMore && !isLoading) {
         setPage((prev) => prev + 1);
       }
     });
 
-    const currentLoader = loaderRef.current;
-    if (currentLoader) observer.observe(currentLoader);
+    const el = loaderRef.current;
+    if (el) observer.observe(el);
     return () => {
-      if (currentLoader) observer.unobserve(currentLoader);
+      if (el) observer.unobserve(el);
     };
   }, [hasMore, isLoading]);
 
   return (
     <Container>
-      <Table data={data} />
-      <div ref={loaderRef} style={{ height: 40, textAlign: "center" }}>
+      <Table data={users} />
+      <div ref={loaderRef} style={{ height: 40 }}>
         {isLoading && "Загрузка..."}
         {!hasMore && "Данных больше нет"}
       </div>

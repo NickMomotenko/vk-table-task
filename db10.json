@@ -7,7 +7,7 @@
       "age": 20,
       "city": "Город 0",
       "position": "Профессия 0",
-      "оклад": 20000
+      "salary": 20000
     },
     {
       "id": 2,
@@ -16,7 +16,7 @@
       "age": 21,
       "city": "Город 1",
       "position": "Профессия 1",
-      "оклад": 21000
+      "salary": 21000
     },
     {
       "id": 3,
@@ -25,7 +25,7 @@
       "age": 22,
       "city": "Город 2",
       "position": "Профессия 2",
-      "оклад": 22000
+      "salary": 22000
     },
     {
       "id": 4,
@@ -34,7 +34,7 @@
       "age": 23,
       "city": "Город 3",
       "position": "Профессия 3",
-      "оклад": 23000
+      "salary": 23000
     },
     {
       "id": 5,
@@ -43,7 +43,23 @@
       "age": 24,
       "city": "Город 4",
       "position": "Профессия 4",
-      "оклад": 24000
+      "salary": 24000
+    },
+    {
+      "id": 6,
+      "salary": 2555151,
+      "position": "sfasffsaafs",
+      "city": "fsafsafasfsa",
+      "age": 22,
+      "name": "fsafsaf"
+    },
+    {
+      "id": 7,
+      "salary": 222,
+      "position": "saffsasaf",
+      "city": "afsfsasaf",
+      "age": 22,
+      "name": "sfafsfsa"
     }
   ]
 }

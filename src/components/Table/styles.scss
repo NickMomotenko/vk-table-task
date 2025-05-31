@@ -1,16 +1,25 @@
 .table {
+  table-layout: fixed;
   width: 100%;
 
   td {
-    padding: 30px 0;
+    padding: 30px 5px;
 
     &:last-child {
       border: none;
     }
   }
 
-  th{
-    padding: 25px 0;
+  th {
+    padding: 25px 5px;
+  }
+
+  th,
+  td {
+    min-width: 30px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   &__head {
