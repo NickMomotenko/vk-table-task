@@ -1,10 +1,14 @@
 import { ModalContainer } from "./containers/ModalContainer";
 import { TableContainer } from "./containers/TableContainer";
+
+import { AddUsers } from "./components/AddUsers";
+
 import { UserProvider } from "./context/UserContext";
+
 import { useModal } from "./hooks/useModal";
 
 import "./App.css";
-import { AddUsers } from "./components/AddUsers";
+
 
 function App() {
   const modal = useModal();

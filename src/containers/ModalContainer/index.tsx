@@ -1,41 +1,35 @@
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
+
 import { Button, Input } from "@vkontakte/vkui";
 import { useForm } from "react-hook-form";
 
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import "./styles.scss";
-import { useEffect, useState } from "react";
 import { useUsers } from "../../context/UserContext";
 
-const schema = yup.object().shape({
-  name: yup.string().required("Обязательное поле"),
-  age: yup
-    .number()
-    .typeError("Должно быть числом")
-    .positive("Только положительное")
-    .integer("Целое число")
-    .required("Обязательное поле"),
-  city: yup.string().required("Обязательное поле"),
-  position: yup.string().required("Обязательное поле"),
-  salary: yup
-    .number()
-    .typeError("Должно быть числом")
-    .positive("Только положительное")
-    .required("Обязательное поле"),
-});
+import { userSchema } from "../../helpers/schema";
 
-export const ModalContainer = ({ active, handler }) => {
+import "./styles.scss";
+
+type ModalContainer = {
+  active?: boolean;
+  handler: Dispatch<SetStateAction<boolean>>;
+};
+
+export const ModalContainer: React.FC<ModalContainer> = ({
+  active,
+  handler,
+}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({ resolver: yupResolver(schema) });
-
-  const { users, setUsers } = useUsers();
+  } = useForm({ resolver: yupResolver(userSchema) });
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const { users, setUsers } = useUsers();
 
   const keys = users[0]
     ? Object.keys(users[0]).filter((key) => key !== "id" && key !== "idNum")
@@ -83,7 +77,7 @@ export const ModalContainer = ({ active, handler }) => {
     <div className="modal">
       <form className="modal__container" onSubmit={handleSubmit(submit)}>
         <div className="modal__body">
-          {keys.map((key) => {
+          {keys.map((key: any) => {
             return (
               <div className="modal__row">
                 <Input

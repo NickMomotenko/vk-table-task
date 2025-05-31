@@ -1,7 +1,13 @@
-import './styles.scss'
+import type { User } from "../../helpers/types";
 
-const Table = ({ data }) => {
-  let headers = data.length ? Object.keys(data[0]) : [];
+import "./styles.scss";
+
+type TableProps = {
+  data?: User[] | [];
+};
+
+const Table: React.FC<TableProps> = ({ data }) => {
+  let headers: string[] | [] = data?.length ? Object.keys(data[0]) : [];
 
   return (
     <div>
@@ -13,12 +19,12 @@ const Table = ({ data }) => {
             ))}
           </tr>
         </thead>
-        <tbody className='table__body'>
+        <tbody className="table__body">
           {data?.map((row) => {
             let rowId = row.id;
             return (
               <tr key={rowId} className="table__row">
-                {headers.map((h) => (
+                {headers.map((h: string) => (
                   <td key={h}>{row[h]}</td>
                 ))}
               </tr>

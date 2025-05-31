@@ -1,13 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 
-type User = {
-  id: number;
-  name: string;
-  age: number;
-  city: string;
-  position: string;
-  salary: number;
-};
+import type { User } from "../helpers/types";
+
 
 type UserContextType = {
   users: User[];
@@ -17,7 +11,7 @@ type UserContextType = {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<User[] | []>([]);
   return (
     <UserContext.Provider value={{ users, setUsers }}>
       {children}

@@ -2,10 +2,14 @@ import { Button } from "@vkontakte/vkui";
 
 import "./styles.scss";
 
-export const AddUsers = ({ onAddClick }) => {
+type AddUsersProps = {
+  onAddClick?: (active: boolean) => void;
+};
+
+export const AddUsers: React.FC<AddUsersProps> = ({ onAddClick }) => {
   return (
     <div className="add-block">
-      <Button onClick={() => onAddClick(true)}>Добавить</Button>
+      <Button onClick={() => onAddClick && onAddClick(true)}>Добавить</Button>
     </div>
   );
 };
