@@ -1,12 +1,13 @@
 # React + TypeScript + Vite
 
-## 🚀 Запуск проекта
+## 🚀 Запуск проекта (demo - https://vk-table.netlify.app/)
 
 ```bash
 # Установка зависимостей
 npm install / yarn
 # Запуск в dev-режиме
 yarn dev
+npx json-server --watch (db.json или db10.json) --port 3000  - запустит сервер db
 ```
 
 ---
