@@ -98,10 +98,11 @@ export const ModalContainer: React.FC<ModalContainer> = ({
             type="submit"
             style={{ marginRight: 15 }}
             disabled={isLoading}
+            data-testid="add-new-user"
           >
             {isLoading ? "Отправляю..." : " Добавить"}
           </Button>
-          <Button onClick={handleCancel}>Отмена</Button>
+          <Button onClick={handleCancel} data-testid="cancel-form">Отмена</Button>
         </div>
       </form>
     </div>

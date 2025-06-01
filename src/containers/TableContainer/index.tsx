@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useUsers } from "../../context/UserContext";
 import { Container } from "../../components/Container";
 import Table from "../../components/Table";
+import { InfiniteBlock } from "../../components/InfiniteBlock";
 
 const LIMIT = 20;
 
@@ -55,10 +56,7 @@ export const TableContainer = () => {
   return (
     <Container>
       <Table data={users} />
-      <div ref={loaderRef} style={{ height: 40 }}>
-        {isLoading && "Загрузка..."}
-        {!hasMore && "Данных больше нет"}
-      </div>
+      <InfiniteBlock ref={loaderRef} isLoading={isLoading} hasMore={hasMore} />
     </Container>
   );
 };
