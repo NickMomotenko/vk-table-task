@@ -20,7 +20,7 @@ const Table: React.FC<TableProps> = ({ data }) => {
           </tr>
         </thead>
         <tbody className="table__body">
-          {data?.map((row) => {
+          {data?.map((row: any) => {
             let rowId = row.id;
             return (
               <tr key={rowId} className="table__row">
