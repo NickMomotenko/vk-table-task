@@ -1,54 +1,74 @@
-# React + TypeScript + Vite
+React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🚀 Запуск проекта
 
-Currently, two official plugins are available:
+# Установка зависимостей
+npm install / yarn
+# Запуск в dev-режиме
+yarn dev
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+📦 Содержание приложения
 
-## Expanding the ESLint configuration
+1. Таблица
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Таблица поддерживает от 5 до 15 полей. Используется стандартная разметка table, благодаря чему таблица адекватно масштабируется при увеличении количества колонок.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Предусмотрен момент, что если содержимое ячейки слишком длинное, оно автоматически сокращается (Профессссссия 0 → Професс...).
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Загрузка данных
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Данные подгружаются с сервера с лимитом 20 записей за одну итерацию.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+Реализован Infinite Scroll с помощью IntersectionObserver.
+
+3. Управление состоянием
+
+Стейт-менеджеры (например, Redux) не использовались — применён Context API.
+
+Так как все разбито архитектурно, то Context вполне адекватно тут смотрится. Архитектура делится на:
+
+Контейнеры — получают данные
+
+UI-компоненты — отвечают за отображение
+
+Рассматривался react-query, даже был создан рабочий прототип, но с IntersectionObserver код становился чуть сложным в понимании, хотя да , базово там очень большой функционал для работы под такую задачу.
+
+4. Форма создания записи
+
+Поля формы генерируются на основе ключей первой записи из таблицы. Форма адаптируется к любому количеству полей, даже если полей будет слишком много - там появится скролл, который не позволит сломать саму форму.
+
+Валидация: react-hook-form + yup. Ошибки отображаются под каждым полем. В схеме yup для валидации не так много описано правил, но она покрывает базовую проверку корректности ввода.
+
+Отправка формы:
+
+Кнопка "Добавить" принимает вид disabled и меняет текст на "Отправляю..."
+
+Добавлена задержка 1 секунда для добавления поля в таблицу. В целом эта функция в дальнейшем не нужна.
+
+Новая запись появляется в начале списка, но при обновлении страницы сортируется по id. Это сделано чтобы условно, если мы имеет 100 записей в таблице, и пролистали только 50 и начали создавать новую, то мы ее увидели вначале, а не пытались пролистать все 100 , чтобы посмотреть что мы там создали.
+
+5. API и json-server
+
+Используется json-server
+
+Данные загружаются из db.json или db10.json. Для теста можно использовать любую из них. Условно db10.json содержить до 10 записей - удобно проверить где именно показывается новая запись и куда в дальнейшем она перемещается. А db.json имеет 100 записей - можно убедится что плавная подгрузка работает корректно.
+
+6. Тесты
+
+Используется Playwright
+
+Описаны тесты для ModalContainer, UI и api создания записи работает адекватно.
+
+Тест для TableContainer: покрывает проверку вызова API и корректную работу IntersectionObserver.
+
+🛠️ Используемые технологии
+
+Vite + React + TypeScript
+
+SASS для стилей (.scss) + БЕМ для написания классов(мог бы использовать CSS Modules или styled-components, но в задании не было указано требований по стилизации, и в описании к вакансии таких требований не было).
+
+react-hook-form + yup — для формы и валидации
+
+VK UI + кастомные стили — я не делал супер UI в этом задании, просто базово адекватный UI, что то отстилизовал сам, где то использовал готовые компоненты.
+
+json-server — мок API
