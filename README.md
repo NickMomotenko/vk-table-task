@@ -1,6 +1,6 @@
 # React + TypeScript + Vite
 
-## 🚀 Запуск проекта (demo - https://vk-table.netlify.app/)
+## 🚀 Запуск проекта
 
 ```bash
 # Установка зависимостей
