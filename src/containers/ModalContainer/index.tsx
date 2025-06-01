@@ -28,8 +28,6 @@ export const ModalContainer: React.FC<ModalContainer> = ({
     reset,
   } = useForm({ resolver: yupResolver(userSchema) });
 
-  console.log(active);
-
   const [isLoading, setIsLoading] = useState(false);
 
   const { users, setUsers } = useUsers();
@@ -73,6 +71,7 @@ export const ModalContainer: React.FC<ModalContainer> = ({
         alert("Ошибка при добавлении");
       }
     } catch (error) {
+      alert("Возможно ты не запустил сервер db или что то пошло не так");
       console.error("Ошибка при отправке:", error);
     } finally {
       setTimeout(() => {
