@@ -15,25 +15,32 @@ export const TableContainer = () => {
   const isFetchingRef = useRef(false);
 
   const fetchPosts = async (pageNumber: number) => {
-    if (isFetchingRef.current) return;
+  if (isFetchingRef.current) return;
 
-    isFetchingRef.current = true;
-    setIsLoading(true);
+  isFetchingRef.current = true;
+  setIsLoading(true);
 
-    try {
-      const res = await fetch(
-        `http://localhost:3000/users?_page=${pageNumber}&_limit=${LIMIT}&_sort=id&_order=asc`
-      );
-      const data = await res.json();
-      setUsers((prev) => [...prev, ...data]);
-      setHasMore(data.length === LIMIT);
-    } catch (err) {
-      console.error("Ошибка:", err);
-    } finally {
-      isFetchingRef.current = false;
-      setIsLoading(false);
-    }
-  };
+  try {
+    const res = await fetch(
+      `http://localhost:3000/users?_page=${pageNumber}&_limit=${LIMIT}&_sort=id&_order=asc`
+    );
+    const data = await res.json();
+
+    setUsers((prev) => {
+      const newIds = data.map((d: any) => d.id);
+      const isAlreadyLoaded = prev.some((u: any) => newIds.includes(u.id));
+      return isAlreadyLoaded ? prev : [...prev, ...data];
+    });
+
+    setHasMore(data.length === LIMIT);
+  } catch (err) {
+    console.error("Ошибка:", err);
+  } finally {
+    isFetchingRef.current = false;
+    setIsLoading(false);
+  }
+};
+
 
   useEffect(() => {
     fetchPosts(page);
@@ -41,7 +48,12 @@ export const TableContainer = () => {
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && hasMore && !isLoading) {
+      if (
+        entries[0].isIntersecting &&
+        hasMore &&
+        !isFetchingRef.current &&
+        !isLoading
+      ) {
         setPage((prev) => prev + 1);
       }
     });
@@ -51,7 +63,7 @@ export const TableContainer = () => {
     return () => {
       if (el) observer.unobserve(el);
     };
-  }, [hasMore, isLoading]);
+  }, [hasMore]);
 
   return (
     <Container>

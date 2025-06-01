@@ -10,6 +10,7 @@ import { useUsers } from "../../context/UserContext";
 import { userSchema } from "../../helpers/schema";
 
 import "./styles.scss";
+import type { User } from "../../helpers/types";
 
 type ModalContainer = {
   active?: boolean;
@@ -31,29 +32,39 @@ export const ModalContainer: React.FC<ModalContainer> = ({
 
   const { users, setUsers } = useUsers();
 
-  const keys = users[0]
+  const keys: string[] = users[0]
     ? Object.keys(users[0]).filter((key) => key !== "id" && key !== "idNum")
     : ["name", "age", "city", "position", "salary"];
 
   useEffect(() => {
     if (active) {
-      document.body.style.overflow = `hidden`;
-    } else document.body.style.overflowY = `auto`;
+      document.body.style.overflowY = `hidden`;
+      return;
+    }
+
+    document.body.style.overflowY = `auto`;
   }, [active]);
 
   const submit = async (data: any) => {
     setIsLoading(true);
 
+    const correctKeys = users[0] ? Object.keys(users[0]) : Object.keys(data);
+
     try {
       const response = await fetch("http://localhost:3000/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: users[users.length - 1]?.id + 1, ...data }),
+        body: JSON.stringify({ ...data }),
       });
 
       if (response.ok) {
         const newItem = await response.json();
-        setUsers((prev) => [newItem, ...prev]);
+
+        const reorderedItem = Object.fromEntries(
+          correctKeys.map((key) => [key, newItem[key]])
+        );
+
+        setUsers((prev: User[] | any) => [reorderedItem, ...prev]);
         reset();
       } else {
         alert("Ошибка при добавлении");
@@ -64,7 +75,7 @@ export const ModalContainer: React.FC<ModalContainer> = ({
       setTimeout(() => {
         setIsLoading(false);
         handler(false);
-      }, 2000);
+      }, 1000);
     }
   };
 
@@ -77,17 +88,21 @@ export const ModalContainer: React.FC<ModalContainer> = ({
     <div className="modal">
       <form className="modal__container" onSubmit={handleSubmit(submit)}>
         <div className="modal__body">
-          {keys.map((key: any) => {
+          {keys.map((mapedKey: any, ind) => {
             return (
-              <div className="modal__row">
+              <div className="modal__row" key={ind}>
                 <Input
-                  placeholder={key}
-                  type={["age", "salary"].includes(key) ? "number" : "text"}
+                  placeholder={mapedKey}
+                  type={
+                    ["age", "salary"].includes(mapedKey) ? "number" : "text"
+                  }
                   className="modal__input"
-                  {...register(key, { required: "Обязательное поле" })}
+                  {...register(mapedKey, { required: "Обязательное поле" })}
                 />
-                {errors[key] && (
-                  <span className="modal__error">{errors[key]?.message}</span>
+                {errors?.[mapedKey as keyof typeof errors]?.message && (
+                  <span className="modal__error">
+                    {errors?.[mapedKey as keyof typeof errors]?.message}
+                  </span>
                 )}
               </div>
             );
@@ -102,7 +117,9 @@ export const ModalContainer: React.FC<ModalContainer> = ({
           >
             {isLoading ? "Отправляю..." : " Добавить"}
           </Button>
-          <Button onClick={handleCancel} data-testid="cancel-form">Отмена</Button>
+          <Button onClick={handleCancel} data-testid="cancel-form">
+            Отмена
+          </Button>
         </div>
       </form>
     </div>

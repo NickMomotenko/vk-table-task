@@ -2,7 +2,6 @@
   "users": [
     {
       "id": 1,
-      "idNum": 1,
       "name": "Имя 1",
       "age": 20,
       "city": "Город 0",
@@ -11,7 +10,6 @@
     },
     {
       "id": 2,
-      "idNum": 2,
       "name": "Имя 2",
       "age": 21,
       "city": "Город 1",
@@ -20,7 +18,6 @@
     },
     {
       "id": 3,
-      "idNum": 3,
       "name": "Имя 3",
       "age": 22,
       "city": "Город 2",
@@ -29,7 +26,6 @@
     },
     {
       "id": 4,
-      "idNum": 4,
       "name": "Имя 4",
       "age": 23,
       "city": "Город 3",
@@ -38,7 +34,6 @@
     },
     {
       "id": 5,
-      "idNum": 5,
       "name": "Имя 5",
       "age": 24,
       "city": "Город 4",
@@ -47,19 +42,43 @@
     },
     {
       "id": 6,
-      "salary": 2555151,
-      "position": "sfasffsaafs",
-      "city": "fsafsafasfsa",
-      "age": 22,
-      "name": "fsafsaf"
+      "name": "Имя 6",
+      "age": 25,
+      "city": "Город 5",
+      "position": "Профессия 0",
+      "salary": 25000
     },
     {
       "id": 7,
-      "salary": 222,
-      "position": "saffsasaf",
-      "city": "afsfsasaf",
+      "name": "Имя 7",
+      "age": 26,
+      "city": "Город 6",
+      "position": "Профессия 1",
+      "salary": 26000
+    },
+    {
+      "id": 8,
+      "name": "Имя 8",
+      "age": 27,
+      "city": "Город 7",
+      "position": "Профессия 2",
+      "salary": 27000
+    },
+    {
+      "id": 9,
+      "name": "Имя 9",
+      "age": 28,
+      "city": "Город 8",
+      "position": "Профессия 3",
+      "salary": 28000
+    },
+    {
+      "salary": 22222,
+      "position": "fsaffssf",
+      "city": "fsaasffs",
       "age": 22,
-      "name": "sfafsfsa"
+      "name": "fsafsafs",
+      "id": 10
     }
   ]
 }
