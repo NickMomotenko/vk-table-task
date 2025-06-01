@@ -2,7 +2,7 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-*{
+* {
   box-sizing: border-box;
 }
 
@@ -26,3 +26,7 @@ body {
 }
 
 
+#root {
+  width: 100%;
+  height: 100%;
+}

@@ -28,6 +28,8 @@ export const ModalContainer: React.FC<ModalContainer> = ({
     reset,
   } = useForm({ resolver: yupResolver(userSchema) });
 
+  console.log(active);
+
   const [isLoading, setIsLoading] = useState(false);
 
   const { users, setUsers } = useUsers();
@@ -38,11 +40,12 @@ export const ModalContainer: React.FC<ModalContainer> = ({
 
   useEffect(() => {
     if (active) {
-      document.body.style.overflowY = `hidden`;
-      return;
+      document.body.style.overflow = `hidden`;
     }
 
-    document.body.style.overflowY = `auto`;
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [active]);
 
   const submit = async (data: any) => {

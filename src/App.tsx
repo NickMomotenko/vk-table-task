@@ -7,9 +7,6 @@ import { UserProvider } from "./context/UserContext";
 
 import { useModal } from "./hooks/useModal";
 
-import "./App.css";
-
-
 function App() {
   const modal = useModal();
 
@@ -18,7 +15,10 @@ function App() {
       <AddUsers onAddClick={modal.setIsModalActive} />
       <TableContainer />
       {modal.isModalActive && (
-        <ModalContainer handler={modal.setIsModalActive} active={modal.isModalActive} />
+        <ModalContainer
+          handler={modal.setIsModalActive}
+          active={modal.isModalActive}
+        />
       )}
     </UserProvider>
   );
