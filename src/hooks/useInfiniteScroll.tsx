@@ -33,6 +33,7 @@ export const useInfiniteScroll = <T,>({
       setHasMore(newData.length === limit);
     } catch (e) {
       console.error("Ошибка при загрузке данных:", e);
+      alert('Ошибка при загрузке данных')
     } finally {
       isFetchingRef.current = false;
       setIsLoading(false);
