@@ -18,7 +18,11 @@ export const TableContainer = () => {
         `http://localhost:3000/users?_page=${page}&_limit=${LIMIT}&_sort=id&_order=asc`
       );
       const json = await res.json();
-      setUsers((prev) => [...prev, ...json]);
+      setUsers((prev) => {
+        const existingIds = new Set(prev.map((u: any) => u.id));
+        const unique = json.filter((u: any) => !existingIds.has(u.id));
+        return [...prev, ...unique];
+      });
       return json;
     },
     limit: LIMIT,

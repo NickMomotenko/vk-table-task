@@ -25,9 +25,9 @@ export const useInfiniteScroll = <T,>({
       const newData = await fetchData(pageNum);
 
       setData((prev) => {
-        const newIds = newData.map((d: any) => d.id);
-        const isAlreadyLoaded = prev.some((u: any) => newIds.includes(u.id));
-        return isAlreadyLoaded ? prev : [...prev, ...newData];
+        const existingIds = new Set(prev.map((d: any) => d.id));
+        const unique = newData.filter((d: any) => !existingIds.has(d.id));
+        return [...prev, ...unique];
       });
 
       setHasMore(newData.length === limit);
