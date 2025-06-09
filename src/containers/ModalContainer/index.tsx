@@ -54,7 +54,7 @@ export const ModalContainer: React.FC<ModalContainer> = ({
           >
             {isLoading ? "Отправляю..." : "Добавить"}
           </Button>
-          <Button onClick={handleCancel} data-testid="cancel-form">
+          <Button onClick={handleCancel} disabled={isLoading} data-testid="cancel-form">
             Отмена
           </Button>
         </div>
